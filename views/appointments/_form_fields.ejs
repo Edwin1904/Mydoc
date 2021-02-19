@@ -1,0 +1,35 @@
+<div>
+    <label>Name</label>
+    <input type="text" name="name" value="<%= appointment.name %>">
+</div> 
+<div>
+    <label>Doctor</label>
+    <select name="doctor">
+    <% doctors.forEach(doctor => { %>
+        <% if (doctor.id === appointment.doctor) { %> 
+            <option selected label="<%= doctor.name %>" value="<%= doctor.id %>">
+        <% } else { %> 
+            <option label="<%= doctor.name %>" value="<%= doctor.id %>"></option>
+        <% } %> 
+    <% }) %> 
+    </select>
+</div>
+<div>
+    <label>Date</label>
+    <input type="date" name="appDate" 
+            value="<%= appointment.appDate == null ? '' : 
+            appointment.appDate.toISOString().split('T')[0] %>">
+</div>
+<div>
+    <label>Time</label>
+    <input type="time" name="time" value="<%= appointment.time == null ? '' : 
+            appointment.time.split('D')[1] %>">
+</div>
+<div>
+    <label>External Files(x-rays/bloodtest)</label>
+    <input type="file" name="ImageName">
+</div>
+<div>
+    <label>Extra info</label>
+    <textarea name="description"><%= appointment.description %></textarea>
+</div>
