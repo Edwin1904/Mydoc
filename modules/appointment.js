@@ -1,8 +1,4 @@
 const mongoose = require('mongoose')
-const path = require('path')
-
-const patientFileImageBasePath = 'uploads/images'
-
 const appointmentSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -24,9 +20,13 @@ const appointmentSchema = new mongoose.Schema({
       required: true,
       default: Date.now
     },
-    ImageName: {
+    Image: {
+      type: Buffer,
+      // required: true
+    },
+    imageType: {
       type: String,
-      required: true
+      // required: true
     },
     doctor: {
       type: mongoose.Schema.Types.ObjectId,
@@ -36,10 +36,9 @@ const appointmentSchema = new mongoose.Schema({
 })
 
 appointmentSchema.virtual('patientFileImageBasePath').get(function() {
-  if (this.ImageName != null) {
-    return path.join('/', patientFileImageBasePath, this.ImageName)
+  if (this.Image != null && this.imageType != null) {
+    return `data:${this.imageType};charset=utf-8;base64,${this.Image.toString('base64')}`
   }
 })
 
 module.exports = mongoose.model('Appointment', appointmentSchema)
-module.exports.patientFileImageBasePath = patientFileImageBasePath
