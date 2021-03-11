@@ -7,7 +7,7 @@ const imageMimeTypes = ['image/jpeg', 'image/png', 'image/svg+xml']
 //All Appointment route
 router.get('/', async (req,res) => {
   try {
-      const appointments = await Appointment.find({})   
+      const appointments = await Appointment.find({}).populate('doctor')
       res.render('appointments/index', {
       appointments: appointments,
       searchOptions: req.query
@@ -42,6 +42,36 @@ router.post('/', async (req, res) => {
    } catch {
     renderNewPage(res, appointment, true)
    }
+  })
+
+  router.get('/:id', async (req, res) => {
+    try {
+      const appointment = await (await Appointment.findById(req.params.id)
+                                                  .populate('doctor'))
+                                                  .exec()
+      res.render()
+    } catch {
+      res.redirect('/')
+    }
+  })
+
+  router.delete('/:id', async (req, res) => {
+    let appointment
+    try {
+      appointment = await Appointment.findById(req.params.id)
+      await appointment.remove()
+      res.redirect('/appointments')
+    } catch(err) {
+      console.log(err)
+      if (appointment != null) { 
+        res.render('appointments/index', {
+          appointment: appointment,
+          errorMessage: 'Could not cancel Appointment'
+        })
+      } else {
+        res.redirect('/')
+      }
+    }
   })
 
   async function renderNewPage(res, appointment, hasError = false) {

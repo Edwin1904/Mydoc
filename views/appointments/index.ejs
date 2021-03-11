@@ -4,11 +4,12 @@
     <table>
         <% appointments.forEach(appointment => { %> 
             <tr>
-           <th><%= appointment.name %></th> 
+           <th><%= appointment.doctor.name %></th> 
            <th><%= appointment.doctor %></th> 
-           <th><%= appointment.appDate %></th> 
+           <th><%= appointment.appDate.toDateString() %></th> 
            <th><%= appointment.time %></th> 
            <th>link</th> 
+           <th><%- include('../partials/deleteForm', { url: `/appointments/${appointments.id}` }) %> </th> 
            </tr> 
        <% }) %> 
    
