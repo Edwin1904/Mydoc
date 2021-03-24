@@ -1,0 +1,34 @@
+<h2 class="page-header">Dr. <%= doctor.name %> <%= doctor.surname %> </h2>
+<img  width="300" height="450" src="<%= doctor.coverImagePath %> ">
+<div><%= doctor.speciality %></div>
+<div class="btn-row">
+    <a class="btn btn-primary" href="/admin/doctors/<%= doctor.id %>/edit">Edit</a>
+    <%- include('../partials/deleteForm', 
+            { url: `/admin/doctors/${doctor.id}`}) %> 
+</div>
+
+<% if (doctorAppointments.lenght > 0) { %>
+  <h2>Scheduled Appointments</h2>  
+  <table class="styled-table">
+    <thead>
+        <tr>
+            <th>Patient </th> 
+            <th>Date of Appointment</th> 
+            <th>Time</th> 
+            <th>Online consultation link</th> 
+            <th>Veiw </a></th> 
+        </tr>
+    </thead>
+    <tbody>
+        <% appointments.forEach(appointment => { %> 
+            <tr>
+                <th><%= appointment.name %></th> 
+                <th><%= appointment.appDate.toDateString() %></th> 
+                <th><%= appointment.time %></th> 
+                <th>none</th> 
+                <th><a class="btn btn-primary" href="/appointments/<%= appointment.id %> "> veiw </a></th> 
+            </tr> 
+        <% }) %> 
+    </tbody>
+</table>
+<% } %>     

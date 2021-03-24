@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
     time: req.body.time,
     description: req.body.description
   }) 
-  saveImage(appointment, req.body.image)
+  saveImage(appointment, req.body.Image)
 
    try {
      const newAppointment = await appointment.save()
@@ -46,23 +46,24 @@ router.post('/', async (req, res) => {
 
   router.get('/:id', async (req, res) => {
     try {
-      const appointment = await (await Appointment.findById(req.params.id)
-                                                  .populate('doctor'))
+      const appointment = await Appointment.findById(req.params.id)
+                                                  .populate('doctor')
                                                   .exec()
-      res.render()
+      res.render('appointments/show', {appointment: appointment})
     } catch {
       res.redirect('/')
     }
   })
 
+    // Delete Route
   router.delete('/:id', async (req, res) => {
     let appointment
     try {
       appointment = await Appointment.findById(req.params.id)
       await appointment.remove()
       res.redirect('/appointments')
-    } catch(err) {
-      console.log(err)
+    } catch {
+      
       if (appointment != null) { 
         res.render('appointments/index', {
           appointment: appointment,

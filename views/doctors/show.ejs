@@ -1,19 +1,4 @@
-<h2><%= doctor.name %> </h2>
-<a href="/doctors/<%= doctor.id %>/edit">Edit</a>
-<%- include('../partials/deleteForm', 
-        { url: `/doctors/${doctor.id}`}) %> 
-<% if (doctorAppointments.lenght > 0) { %>
-  <h2>Scheduled Appointments</h2>  
-  <table>
-    <% doctorAppointments.forEach(appointment => { %> 
-        <tr>
-       <th><%= appointment.name %></th> 
-       <th><%= appointment.doctor %></th> 
-       <th><%= appointment.appDate %></th> 
-       <th><%= appointment.time %></th> 
-       <th>link</th> 
-       </tr> 
-   <% }) %> 
-
-</table>
-<% } %>     
+<h2 class="page-header1">Doctor Info </h2>
+<h2 class="page-header" >Dr. <%= doctor.name %> <%= doctor.surname %> </h2>
+<img width="300" height="450" src="<%= doctor.coverImagePath%> ">
+<div><%= doctor.speciality %> </div>    

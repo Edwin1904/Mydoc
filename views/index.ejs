@@ -1,18 +1,28 @@
-<h1>Welcome</h1>
+<h1 class="page-header1" >Welcome</h1>
 <br>
-<h2>Your Appointments</h2>
+<h2 class="page-header">Your Appointments </h2>
 
 <div>
-    <table>
-        <% appointments.forEach(appointment => { %> 
+    <table class="styled-table">
+        <thead>
             <tr>
-           <th><%= appointment.name %></th> 
-           <th><%= appointment.doctor %></th> 
-           <th><%= appointment.appDate %></th> 
-           <th><%= appointment.time %></th> 
-           <th>link</th> 
-           </tr> 
-       <% }) %> 
-   
+                <th>Doctor</th> 
+                <th>Date of Appointment</th> 
+                <th>Time</th> 
+                <th>Online consultation link</th> 
+                <th>Veiw </a></th> 
+            </tr>
+        </thead>
+        <tbody>
+            <% appointments.forEach(appointment => { %> 
+                <tr>
+                    <th>Dr. <%= appointment.doctor.name %> <%= appointment.doctor.surname %></th> 
+                    <th><%= appointment.appDate.toDateString() %></th> 
+                    <th><%= appointment.time %></th> 
+                    <th>none</th> 
+                    <th><a class="btn btn-primary" href="/appointments/<%= appointment.id %> "> veiw </a></th> 
+                </tr> 
+            <% }) %> 
+        </tbody>
    </table>
 </div>

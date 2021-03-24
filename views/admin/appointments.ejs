@@ -1,0 +1,48 @@
+<h2 class="page-header">Appointments</h2>
+
+<form action="/admin/appointments" method="GET">
+    <div class="form-row">
+      <div class="form-item">
+        <label>Name</label>
+        <input type="text" name="name" value="<%= searchOptions.name %>">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-item">
+        <label>Appointments After</label>
+        <input type="date" name="reservedAfter" value="<%= searchOptions.reservedAfter %>">
+      </div>
+      <div class="form-item">
+        <label>Appointments Before</label>
+        <input type="date" name="reservedBefore" value="<%= searchOptions.reservedBefore %>">
+      </div>
+    </div>
+    <div class="form-row form-row-end">
+      <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+  </form>
+
+  <table class="styled-table">
+    <thead>
+        <tr>
+            <th>Patient</th> 
+            <th>Doctor</th> 
+            <th>Date of Appointment</th> 
+            <th>Time</th> 
+            <th>Online consultation link</th> 
+            <th>Veiw </a></th> 
+        </tr>
+    </thead>
+    <tbody>
+        <% appointments.forEach(appointment => { %> 
+            <tr>
+                <th><%= appointment.name %></th> 
+                <th>Dr. <%= appointment.doctor.name %> <%= appointment.doctor.surname %></th> 
+                <th><%= appointment.appDate.toDateString() %></th> 
+                <th><%= appointment.time %></th> 
+                <th>none</th> 
+                <th><a class="btn btn-primary" href="/admin/appointments/<%= appointment.id %> "> veiw </a></th> 
+            </tr> 
+        <% }) %> 
+    </tbody>
+</table>

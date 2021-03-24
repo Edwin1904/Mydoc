@@ -20,29 +20,7 @@ router.get('/', async (req,res) => {
       }
     })
 
-// New Doctor Route
-router.get('/new', (req, res) => {
-    res.render('doctors/new', { doctor: new Doctor()})
-  })
-
-  // Create Author Route
-
-router.post('/', async (req, res) => {
-    const doctor = new Doctor({
-        name: req.body.name
-    })
-    try {
-        const newDoctor = await doctor.save()
-        res.redirect(`doctors/${newDoctor.id}`)
-      } catch {
-        res.render('doctors/new', {
-          doctor: doctor,
-          errorMessage: 'Error creating Author'
-        })
-      }
-  })
-
-
+//Show doctor
 router.get('/:id', async (req, res) => {
   try {
     const doctor = await Doctor.findById(req.params.id)
@@ -56,47 +34,5 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.get('/:id/edit', async (req, res) => {
-  try {
-    const doctor = await Doctor.findById(req.params.id) 
-    res.render('doctors/edit', { doctor: doctor})
-  } catch {
-    res.redirect('/doctors')
-  }
-})
-
-router.put('/:id', async (req, res) => {
-  let doctor
-try {
-    doctor = await Doctor.findById(req.params.id)
-    doctor.name = req.body.name
-    await doctor.save()
-    res.redirect(`/doctors/${doctor.id}`)
-  } catch {
-    if (doctor == null) {
-      req.redirect('/')
-    } else {
-      res.render('doctors/edit', {
-        doctor: doctor,
-        errorMessage: 'Error updatinng Author'
-      })
-    }
-  }
-})
-
-router.delete('/:id', async (req, res) => {
-  let doctor
-  try {
-      doctor = await Doctor.findById(req.params.id)
-      await doctor.remove()
-      res.redirect('/doctors')
-    } catch {
-      if (doctor == null) {
-        req.redirect('/')
-      } else {
-        res.redirect(`/doctors/${doctor.id}`)
-      }
-    }
-})
 
 module.exports = router

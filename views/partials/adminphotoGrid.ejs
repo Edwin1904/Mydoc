@@ -1,0 +1,16 @@
+
+<div class="book-grid">
+  <% doctors.forEach(doctor => { %>
+    <div>
+      <a href="doctors/<%= doctor.id %>">
+        <img height="300" width="200" src="<%= doctor.coverImagePath %>">
+      </a>
+      <div>Dr. <%= doctor.name %> <%= doctor.surname %> </div>
+    <div class="btn-row">
+          <a class="btn btn-primary" href="/admin/doctors/<%= doctor.id %>">View</a>
+          <%- include('../partials/deleteForm', 
+                          { url: `/admin/doctors/${doctor.id}`}) %> 
+    </div>
+  </div>  
+  <% }) %>
+</div>

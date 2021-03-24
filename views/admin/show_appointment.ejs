@@ -1,0 +1,21 @@
+<h2 class="page-header" ><%= appointment.name %></h2>
+<div class="book-details">
+    <div>    
+        <img width="300" height="450" src="<%= appointment.patientFileImageBasePath%> ">
+        <div class="book-details-btn-grid">
+            <%- include('../partials/deleteForm', { url: `/admin/appointments/${appointment.id}`}) %> 
+            <a class="btn btn-primary" href="/doctors/<%= appointment.doctor.id %> ">Veiw Doctor</a>
+        </div>
+        
+    </div>  
+    <div class="book-details-grid">
+        <div class="book-details-label">Doctor:</div>
+        <div><%= appointment.doctor.name %></div>
+        <div class="book-details-label">Date:</div>
+        <div><%= appointment.appDate.toDateString() %></div>
+        <div class="book-details-label">Time:</div>
+        <div><%= appointment.time %> </div>
+        <div class="book-details-label">Description:</div>
+        <div><%= appointment.description %></div>
+    </div>      
+</div>

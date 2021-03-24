@@ -1,35 +1,41 @@
-<div>
-    <label>Name</label>
-    <input type="text" name="name" value="<%= appointment.name %>">
-</div> 
-<div>
-    <label>Doctor</label>
-    <select name="doctor">
-    <% doctors.forEach(doctor => { %>
-        <% if (doctor.id === appointment.doctor) { %> 
-            <option selected label="<%= doctor.name %>" value="<%= doctor.id %>">
-        <% } else { %> 
-            <option label="<%= doctor.name %>" value="<%= doctor.id %>"></option>
-        <% } %> 
-    <% }) %> 
-    </select>
+<div class="form-row">
+    <div class="form-item">
+        <label>Name</label>
+        <input type="text" name="name" value="<%= appointment.name %>">
+    </div>
+    <div class="form-item">
+        <label>Doctor</label>
+        <select name="doctor">
+        <% doctors.forEach(doctor => { %>
+            <% if (doctor.id === appointment.doctor) { %> 
+                <option selected label=" Dr. <%= doctor.name %> <%= doctor.surname %> " value="<%= doctor.id %>">
+            <% } else { %> 
+                <option label=" Dr. <%= doctor.name %> <%= doctor.surname %> " value="<%= doctor.id %>"></option>
+            <% } %> 
+        <% }) %> 
+        </select>
+    </div>
 </div>
-<div>
-    <label>Date</label>
-    <input type="date" name="appDate" 
-            value="<%= appointment.appDate == null ? '' : 
-            appointment.appDate.toISOString().split('T')[0] %>">
+<div class="form-row">
+    <div class="form-item">
+        <label>Date</label>
+        <input type="date" name="appDate" 
+                value="<%= appointment.appDate == null ? '' : 
+                appointment.appDate.toISOString().split('T')[0] %>">
+    </div>
+<div class="form-item">
+        <label>Time</label>
+        <input type="time" name="time" value="<%= appointment.time == null ? '' : 
+                appointment.time.split('D')[1] %>">
+    </div>
 </div>
-<div>
-    <label>Time</label>
-    <input type="time" name="time" value="<%= appointment.time == null ? '' : 
-            appointment.time.split('D')[1] %>">
-</div>
-<div>
-    <label>External Files(x-rays/bloodtest)</label>
-    <input type="file" name="ImageName" class="filepond">
-</div>
-<div>
-    <label>Extra info</label>
-    <textarea name="description"><%= appointment.description %></textarea>
-</div>
+<div class="form-row">
+    <div class="form-item form-item-no-grow">
+        <label>External Files(x-rays/bloodtest)</label>
+        <input type="file" name="Image" class="book-cover filepond">
+    </div>
+    <div class="form-item">
+        <label>Extra info</label>
+        <textarea name="description"><%= appointment.description %></textarea>
+    </div>
+ </div>   
