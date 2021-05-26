@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
   }) 
   saveImage(appointment, req.body.Image)
 
-   try {
+   try {  
      const newAppointment = await appointment.save()
      // res.redirect(`appointments/${newAppointment.id}`)
      res.redirect(`appointments`)

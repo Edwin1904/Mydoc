@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+
 const appointmentSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -9,10 +10,12 @@ const appointmentSchema = new mongoose.Schema({
     },
     appDate: {
         type: Date,
+        unique: true,
         require: true
     },
     time: {
       type: String,
+      unique: true
       //required: true
     },
     createdAt: {
@@ -32,6 +35,10 @@ const appointmentSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'Doctor'
+    },
+    prescription: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Prescription'
     }
 })
 

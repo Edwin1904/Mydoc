@@ -1,0 +1,18 @@
+<div class="form-row">
+    <div class="form-item">
+        <label>Patient</label>
+        <select name="patient">
+        <% appointment.forEach(patient => { %>
+            <% if (patient.id === patient.name) { %> 
+                <option selected label=" <%= patient.name %> " value="<%= patient.id %>">
+            <% } else { %> 
+                <option label=" <%= patient.name %> " value="<%= patient.id %>"></option>
+            <% } %> 
+        <% }) %> 
+        </select>
+    </div>
+    <div class="form-item">
+        <label>Prescription</label>
+        <textarea name="prescription"><%= prescription.prescription %></textarea>
+    </div>
+ </div>   
