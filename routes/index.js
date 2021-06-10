@@ -3,6 +3,7 @@ const router = express.Router()
 const Appointment = require('../modules/appointment')
 const Doctor = require('../modules/doctor')
 
+// Homepage Route
 router.get('/', async (req,res) => {
     let appointments
     try {

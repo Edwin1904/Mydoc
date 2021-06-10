@@ -1,12 +1,12 @@
 <div class="form-row">
     <div class="form-item">
         <label>Patient</label>
-        <select name="patient">
-        <% appointment.forEach(patient => { %>
-            <% if (patient.id === patient.name) { %> 
-                <option selected label=" <%= patient.name %> " value="<%= patient.id %>">
+        <select name="appointment">
+        <% appointment.forEach(appointment => { %>
+            <% if (appointment.id === appointment.name) { %> 
+                <option selected label=" <%= appointment.name %> " value="<%= appointment.id %>">
             <% } else { %> 
-                <option label=" <%= patient.name %> " value="<%= patient.id %>"></option>
+                <option label=" <%= appointment.name %> <%= appointment.surname %> " value="<%= appointment.id %>"></option>
             <% } %> 
         <% }) %> 
         </select>

@@ -1,4 +1,4 @@
-<h2 class="page-header" ><%= appointment.name %></h2>
+<h2 class="page-header" ><%= appointment.name %> <%= appointment.surname %></h2>
 <div class="book-details">
     <div>    
         <img width="300" height="450" src="<%= appointment.patientFileImageBasePath%> ">
@@ -9,13 +9,17 @@
         
     </div>  
     <div class="book-details-grid">
+        <div class="book-details-label">SSN:</div>
+        <div><%= appointment.SSN %></div>
         <div class="book-details-label">Doctor:</div>
-        <div><%= appointment.doctor.name %></div>
+        <div>Dr. <%= appointment.doctor.name %> <%= appointment.doctor.surname %></div>
         <div class="book-details-label">Date:</div>
         <div><%= appointment.appDate.toDateString() %></div>
         <div class="book-details-label">Time:</div>
         <div><%= appointment.time %> </div>
         <div class="book-details-label">Description:</div>
         <div><%= appointment.description %></div>
+        <div class="book-details-label">Prescription:</div>
+        <div><%= prescription.prescription %></div>
     </div>      
 </div>

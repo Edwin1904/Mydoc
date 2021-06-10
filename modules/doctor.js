@@ -2,10 +2,7 @@ const mongoose = require('mongoose')
 const Appointment = require('./appointment')
 
 const doctorSchema = new mongoose.Schema({
-    login: {
-        type: String,
-        // required: true
-    },
+    
     name: {
         type: String,
         required: true

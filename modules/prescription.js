@@ -8,10 +8,8 @@ const prescriptionSchema = new mongoose.Schema({
     prescription: {
         type: String,
         required: true
-    },
-    pickup: {
-        type: String,
     }
+    
 })
 
-module.exports = mongoose.model('Persription', prescriptionSchema)
+module.exports = mongoose.model('Prescription', prescriptionSchema)

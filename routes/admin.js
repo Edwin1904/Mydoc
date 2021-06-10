@@ -2,11 +2,12 @@ const express = require('express')
 const router = express.Router()
 const Doctor = require('../modules/doctor')
 const Appointment = require('../modules/appointment')
-const doctor = require('../modules/doctor')
+const Prescription = require('../modules/prescription')
 const { update } = require('../modules/appointment')
 const { query } = require('express')
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/svg+xml']
 
+//Admin index
 router.get('/', async (req,res) => {
   let appointments
   try {
@@ -41,12 +42,11 @@ router.get('/doctors/new', (req, res) => {
 })
 
 // Create doctor Route
-
 router.post('/doctors', async (req, res) => {
   const doctor = new Doctor({
       name: req.body.name,
       surname: req.body.surname,
-      speciality: req.body.surname
+      speciality: req.body.speciality
   })
   saveImage(doctor, req.body.Image)
   try {
@@ -62,7 +62,7 @@ router.post('/doctors', async (req, res) => {
     }
 })
 
-
+//show doctor
 router.get('/doctors/:id', async (req, res) => {
 try {
   const doctor = await Doctor.findById(req.params.id)
@@ -77,6 +77,7 @@ try {
 }
 })
 
+//edit doctor
 router.get('/doctors/:id/edit', async (req, res) => {
 try {
   const doctor = await Doctor.findById(req.params.id) 
@@ -113,6 +114,7 @@ try {
 }
 })
 
+//delete doctor
 router.delete('/doctors/:id', async (req, res) => {
 let doctor
 try {
@@ -152,18 +154,25 @@ router.get('/appointments', async (req,res) => {
   }
   })
 
+
+  //show appointment
   router.get('/appointments/:id', async (req, res) => {
     try {
       const appointment = await Appointment.findById(req.params.id)
                                                   .populate('doctor')
                                                   .exec()
-      res.render('admin/show_appointment', {appointment: appointment, layout: 'layouts/admin'})
+       const prescription = await Prescription.find({ appointment: appointment.id })
+      res.render('admin/show_appointment', {
+        appointment: appointment, 
+        prescription: prescription,
+        layout: 'layouts/admin'
+      })
     } catch {
       res.redirect('/admin')
     }
   })
 
-    // Delete appointment Route
+  // Delete appointment Route
   router.delete('/appointments/:id', async (req, res) => {
     let appointment
     try {
@@ -185,6 +194,8 @@ router.get('/appointments', async (req,res) => {
   })
 
 
+
+// Save Image funnction
 function saveImage(doctor, imageEncoded) {
   if (imageEncoded == null) return
   const image = JSON.parse(imageEncoded)

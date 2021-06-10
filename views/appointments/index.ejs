@@ -16,7 +16,7 @@
                 <th>Dr. <%= appointment.doctor.name %> <%= appointment.doctor.surname %></th> 
                 <th><%= appointment.appDate.toDateString() %></th> 
                 <th><%= appointment.time %></th> 
-                <th>none</th> 
+                <th><a href="http://localhost:3030/"> Start meeting </a></th>  
                 <th><a class="btn btn-primary" href="/appointments/<%= appointment.id %> "> veiw </a></th> 
             </tr> 
         <% }) %> 

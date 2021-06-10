@@ -5,6 +5,14 @@ const appointmentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    surname: {
+      type: String,
+      required: true
+    },
+    SSN: {
+      type: String,
+      required: true
+    },
     description: {
         type: String,
     },
@@ -35,10 +43,6 @@ const appointmentSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'Doctor'
-    },
-    prescription: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Prescription'
     }
 })
 

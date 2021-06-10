@@ -4,7 +4,8 @@
   <table class="styled-table">
     <thead>
         <tr>
-            <th>Patient </th> 
+            <th>Patient </th>
+            <th>SSN </th> 
             <th>Date of Appointment</th> 
             <th>Time</th> 
             <th>Online consultation link</th> 
@@ -14,11 +15,12 @@
     <tbody>
         <% doctorAppointments.forEach(appointment => { %> 
             <tr>
-                <th><%= appointment.name %></th> 
+                <th><%= appointment.name %> <%= appointment.surname %></th> 
+                <th><%= appointment.SSN %></th> 
                 <th><%= appointment.appDate.toDateString() %></th> 
                 <th><%= appointment.time %></th> 
-                <th>none</th> 
-                <th><a class="btn btn-primary" href="/appointments/<%= appointment.id %> "> veiw </a></th> 
+                <th><a href="http://localhost:3030/"> Start meeting </a></th> 
+                <th><a class="btn btn-primary" href="/physician/appointments/<%= appointment.id %> "> veiw </a></th> 
             </tr> 
         <% }) %> 
     </tbody>

@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Appointment = require('../modules/appointment')
 const Doctor = require('../modules/doctor')
+const Prescription = require('../modules/prescription')
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/svg+xml']
 
 //All Appointment route
@@ -28,6 +29,8 @@ router.get('/new', async (req, res) => {
 router.post('/', async (req, res) => {
   const appointment = new Appointment({
     name: req.body.name,
+    surname: req.body.surname,
+    SSN: req.body.SSN,
     doctor: req.body.doctor,
     appDate: new Date(req.body.appDate),
     time: req.body.time,
@@ -39,23 +42,27 @@ router.post('/', async (req, res) => {
      const newAppointment = await appointment.save()
      // res.redirect(`appointments/${newAppointment.id}`)
      res.redirect(`appointments`)
-   } catch {
+   } catch  {
     renderNewPage(res, appointment, true)
    }
   })
 
+//show appointments
   router.get('/:id', async (req, res) => {
     try {
       const appointment = await Appointment.findById(req.params.id)
                                                   .populate('doctor')
                                                   .exec()
-      res.render('appointments/show', {appointment: appointment})
+      const prescriptions = await Prescription.find({ appointment: appointment.id })
+      res.render('appointments/show', {
+        appointment: appointment,
+        prescription: prescriptions})
     } catch {
       res.redirect('/')
     }
   })
 
-    // Delete Route
+// Delete Route
   router.delete('/:id', async (req, res) => {
     let appointment
     try {
@@ -75,6 +82,7 @@ router.post('/', async (req, res) => {
     }
   })
 
+  //render form page function
   async function renderNewPage(res, appointment, hasError = false) {
     try {
       const doctors = await Doctor.find({})
@@ -89,6 +97,7 @@ router.post('/', async (req, res) => {
     }
   }
 
+  // Save Image Function
   function saveImage(appointment, imageEncoded) {
     if (imageEncoded == null) return
     const image = JSON.parse(imageEncoded)

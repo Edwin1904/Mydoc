@@ -1,0 +1,17 @@
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>Patient</th>
+            <th>Prescription</th>
+        
+        </tr>
+    </thead>
+    <tbody>
+        <% prescription.forEach(prescription => { %> 
+            <tr>
+              <th></th>  
+              <th><%= prescription.prescription %></th> 
+            </tr> 
+        <% }) %> 
+    </tbody>
+</table>

@@ -4,7 +4,8 @@ const Doctor = require('../modules/doctor')
 const Appointment = require('../modules/appointment')
 const Prescription = require('../modules/prescription')
 
-      //All Doctors route
+
+//All Doctors route
 router.get('/', async (req,res) => {
   let searchOptions = {}
   if (req.query.name != null && req.query.name !== ''){
@@ -22,6 +23,7 @@ router.get('/', async (req,res) => {
     }
   })
 
+// Doctor homepage route  
   router.get('/:id', async (req, res) => {
     try {
       const doctor = await Doctor.findById(req.params.id)
@@ -36,41 +38,18 @@ router.get('/', async (req,res) => {
     }
     })
 
-    router.get('/prescription/new', async (req, res) => {
-      renderNewPage(res, new Appointment())
-     })
-    
-    router.post('/prescription', async (req, res) => {
-      const prescription = new Prescription({
-          patient: req.body.patient,
-          prescription: req.body.prescription
-      })
+ // doctor patient infe route
+    router.get('/appointments/:id', async (req, res) => {
       try {
-          const newPrescription = await prescription.save()
-          res.redirect(`/physicians/prescription/${newPrescription.id}`)
-        } catch {
-          res.render('physicians/prescription', {
-            prescription: prescription,
-            errorMessage: 'Error creating prescription', 
-            layout : './layouts/physicians'
-          })
-        }
+        const appointment = await Appointment.findById(req.params.id)
+                                                    .populate('doctor')
+                                                    .exec()
+        res.render('physicians/show_patient', {appointment: appointment, layout : './layouts/physician'})
+      } catch {
+        res.redirect('/')
+      }
     })
 
 
-
-    async function renderNewPage(res, prescription, hasError = false) {
-      try {
-        const patient = await Appointment.find({})
-        const params = {
-          patient: patient,
-          prescription: prescription
-        }
-        if (hasError) params.errorMessage = 'Error Saving Prescription'
-        res.render('physicians/new_prescription', params, {layout: 'layouts/physician'})
-      } catch {
-        res.redirect('/physicians/prescription')
-      }
-    }
 
 module.exports = router
