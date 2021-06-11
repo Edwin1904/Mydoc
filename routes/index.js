@@ -6,9 +6,8 @@ const { auth, requiresAuth } = require('express-openid-connect');
 
 
 router.get('/', async (req,res) => {
-    let doctor
     try {
-        doctor = await Doctor.find({})
+        const doctor = await Doctor.find({})
         res.render('landing', {
             doctor: doctor,
             layout: "layouts/landing"

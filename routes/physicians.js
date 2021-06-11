@@ -5,23 +5,6 @@ const Appointment = require('../modules/appointment')
 const Prescription = require('../modules/prescription')
 
 
-//All Doctors route
-router.get('/', async (req,res) => {
-  let searchOptions = {}
-  if (req.query.name != null && req.query.name !== ''){
-      searchOptions.name = new RegExp(req.query.name, 'i')
-  }
-  try {
-      const doctors = await Doctor.find(searchOptions)
-      res.render('physicians/doctors', { 
-          doctors: doctors, 
-          searchOptions: req.query,
-          layout: 'layouts/physician'
-      })
-    } catch {
-      res.redirect('/physician')
-    }
-  })
 
 // Doctor homepage route  
   router.get('/:id', async (req, res) => {
@@ -38,7 +21,7 @@ router.get('/', async (req,res) => {
     }
     })
 
- // doctor patient infe route
+ // doctor patient info route
     router.get('/appointments/:id', async (req, res) => {
       try {
         const appointment = await Appointment.findById(req.params.id)
