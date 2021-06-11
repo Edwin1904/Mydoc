@@ -4,7 +4,7 @@
         <img width="300" height="450" src="<%= appointment.patientFileImageBasePath%> ">
         <div class="book-details-btn-grid">
             <%- include('../partials/deleteForm', { url: `/admin/appointments/${appointment.id}`}) %> 
-            <a class="btn btn-primary" href="/doctors/<%= appointment.doctor.id %> ">Veiw Doctor</a>
+            <a class="btn btn-primary" href="/admin/doctors/<%= appointment.doctor.id %> ">Veiw Doctor</a>
         </div>
         
     </div>  
@@ -20,6 +20,10 @@
         <div class="book-details-label">Description:</div>
         <div><%= appointment.description %></div>
         <div class="book-details-label">Prescription:</div>
-        <div><%= prescription.prescription %></div>
+        <div>
+            <% prescriped.forEach(prescription => { %>
+                <tr><%= prescription.prescription %> </tr>
+            <% }) %>     
+        </div>
     </div>      
 </div>

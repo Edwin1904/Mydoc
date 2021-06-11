@@ -164,7 +164,7 @@ router.get('/appointments', async (req,res) => {
        const prescription = await Prescription.find({ appointment: appointment.id })
       res.render('admin/show_appointment', {
         appointment: appointment, 
-        prescription: prescription,
+        prescriped: prescription,
         layout: 'layouts/admin'
       })
     } catch {
@@ -192,6 +192,40 @@ router.get('/appointments', async (req,res) => {
       }
     }
   })
+
+  // show all prescriptions
+router.get('/prescriptions', async (req, res) => {
+  try {
+    const prescription = await Prescription.find({}).populate('appointment')
+    res.render('admin/prescription', {
+    prescription: prescription,
+    layout: 'layouts/admin'
+  })
+} catch {
+  res.redirect('/')
+}
+})
+
+ // Delete Route
+ router.delete('/prescriptions/:id', async (req, res) => {
+  let prescription
+  try {
+    prescription = await Prescription.findById(req.params.id)
+    await prescription.remove()
+    res.redirect('/prescription')
+  } catch {
+    
+    if (prescription != null) { 
+      res.render('admin/prescription', {
+        prescription: prescription,
+        errorMessage: 'Could not delete prescription'
+      })
+    } else {
+      res.redirect('/prescription')
+    }
+  }
+})
+
 
 
 

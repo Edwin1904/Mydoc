@@ -4,13 +4,13 @@ const Prescription = require('../modules/prescription')
 const Appointment = require('../modules/appointment')
 
 
-
+// show all prescritions
 router.get('/', async (req, res) => {
   try {
     const prescription = await Prescription.find({}).populate('appointment')
-    res.render('admin/prescription', {
+    res.render('physicians/prescription', {
     prescription: prescription,
-    layout: 'layouts/admin'
+    layout: 'layouts/physician'
   })
 } catch {
   res.redirect('/')
@@ -31,27 +31,32 @@ router.get('/new', async (req,res ) => {
     try {
         const newPrescription = await prescription.save()
         // res.redirect(`/prescription/${newPrescription.id}`)
-        res.render('physicians/successful', { layout: 'layouts/physician' })
+        res.redirect('/prescription')
       } catch (err) {
         console.log(err)
         renderNewPage(res, prescription, true)
       }
   })
 
-  //Show prescription
-  router.get('/:id', async (req, res) => {
+    // Delete Route
+  router.delete('/:id', async (req, res) => {
+    let prescription
     try {
-      const doctor = await Doctor.findById(req.params.id)
-      const appointments = await Appointment.find({ doctor: doctor.id }).limit(6).exec()
-      res.render('physicians/show_doctors', {
-        doctor: doctor,
-        doctorAppointments: appointments, 
-        layout : './layouts/physician'
-      })
+      prescription = await Prescription.findById(req.params.id)
+      await prescription.remove()
+      res.redirect('/prescription')
     } catch {
-      res.redirect('/physician')
+      
+      if (prescription != null) { 
+        res.render('admin/prescription', {
+          prescription: prescription,
+          errorMessage: 'Could not delete prescription'
+        })
+      } else {
+        res.redirect('/prescription')
+      }
     }
-    })
+  })
 
 
 

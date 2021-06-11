@@ -2,16 +2,33 @@ const express = require('express')
 const router = express.Router()
 const Appointment = require('../modules/appointment')
 const Doctor = require('../modules/doctor')
+const { auth, requiresAuth } = require('express-openid-connect');
+
+
+router.get('/', async (req,res) => {
+    let doctor
+    try {
+        doctor = await Doctor.find({})
+        res.render('landing', {
+            doctor: doctor,
+            layout: "layouts/landing"
+        })
+    } catch {
+        res.send("error404")
+    }
+    
+})
+
 
 // Homepage Route
-router.get('/', async (req,res) => {
-    let appointments
+router.get('/home', requiresAuth(), async (req,res) => {
     try {
-        appointments = await Appointment.find().populate('doctor').sort({ createdAt: 'desc' }).limit(10).exec()
+        const appointments = await Appointment.find().populate('doctor').sort({ createdAt: 'desc' }).limit(10).exec()
+        res.render('index', { appointments: appointments })
     } catch {
-        appointments = []
+        res.redirect('/')
     }
-    res.render('index', { appointments: appointments })
+    
 })
 
 module.exports = router

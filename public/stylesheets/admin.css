@@ -6,6 +6,7 @@
 @import 'shared/form.css';
 @import 'shared/author.css';
 @import 'shared/books.css';
+@import 'shared/logout.css';
 
 :root {
   font-family: 'Gotham Rounded';

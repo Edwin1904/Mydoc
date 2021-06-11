@@ -1,0 +1,15 @@
+<header>
+    <nav class="header-nav">
+        <a class="header-title" href="/">MyDoc</a>
+        <ul>
+            <li class="header-link"><a href="/admin">Admin</a></li>
+            <li class="header-link"><a href="">Physicians</a>
+            <ul >
+                <% doctor.forEach(doctor => { %> 
+                <li class="header-link"><a href="/physician/<%= doctor.id %>"><%= doctor.name %> <%= doctor.surname %></a>
+                    <% }) %> 
+            </ul>
+            </li>
+        </ul>
+    </nav>
+</header>

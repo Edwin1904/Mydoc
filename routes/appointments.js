@@ -53,10 +53,10 @@ router.post('/', async (req, res) => {
       const appointment = await Appointment.findById(req.params.id)
                                                   .populate('doctor')
                                                   .exec()
-      const prescriptions = await Prescription.find({ appointment: appointment.id })
+      const prescriptions = await Prescription.find({ appointment: appointment.id }).limit(6).exec()
       res.render('appointments/show', {
         appointment: appointment,
-        prescription: prescriptions})
+        prescriped: prescriptions})
     } catch {
       res.redirect('/')
     }

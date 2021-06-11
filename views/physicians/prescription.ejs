@@ -13,7 +13,7 @@
               <th><%= prescription.appointment.name%> <%= prescription.appointment.surname%></th>  
               <th><%= prescription.prescription %></th>
               <th><%- include('../partials/deleteForm', 
-            { url: `/admin/prescription/${prescription.id}`}) %> </th>  
+            { url: `/prescription/${prescription.id}`}) %> </th>  
             </tr> 
         <% }) %> 
     </tbody>
