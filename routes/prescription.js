@@ -30,7 +30,6 @@ router.get('/new', async (req,res ) => {
     })
     try {
         const newPrescription = await prescription.save()
-        // res.redirect(`/prescription/${newPrescription.id}`)
         res.redirect('/prescription')
       } catch (err) {
         console.log(err)
@@ -59,7 +58,7 @@ router.get('/new', async (req,res ) => {
   })
 
 
-
+// function to render new prescription form page 
 async function renderNewPage(res, prescription, hasError = false) {
   try {
     const appointment = await Appointment.find({})

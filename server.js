@@ -1,16 +1,19 @@
+// calling the environment varibles
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
   }
 
+
+// declaring modules 
 const express = require('express')
 const app = express()
 const expressLayouts = require('express-ejs-layouts')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
-const { auth, requiresAuth, claimEquals } = require('express-openid-connect');
-const jwtAuthz = require("express-jwt-authz")
+const { auth, requiresAuth } = require('express-openid-connect');
 
 
+// declaring route
 const indexRouter = require('./routes/index')
 const doctorRouter = require('./routes/doctors')
 const appointmentRouter = require('./routes/appointments')
@@ -26,12 +29,14 @@ app.use(methodOverride('_method'))
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false}))
 
+// database connection
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongoose'))
 
+// authentication api varibles
 app.use(
   auth({
     issuerBaseURL: process.env.ISSUER_BASE_URL,
@@ -43,12 +48,12 @@ app.use(
   })
 );
 
+// setting routes
 app.use('/', indexRouter)
 app.use('/doctors', requiresAuth(), doctorRouter)
 app.use('/appointments', requiresAuth(), appointmentRouter)
 app.use('/admin', requiresAuth(), adminRouter)
 app.use('/physician', requiresAuth(), physicianRouter)
 app.use('/prescription', requiresAuth(), prescriptionRouter)
-
 
 app.listen(process.env.PORT || 3000)

@@ -4,7 +4,7 @@ const Appointment = require('../modules/appointment')
 const Doctor = require('../modules/doctor')
 const { auth, requiresAuth } = require('express-openid-connect');
 
-
+// landing page
 router.get('/', async (req,res) => {
     try {
         const doctor = await Doctor.find({})
